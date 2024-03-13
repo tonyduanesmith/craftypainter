@@ -1,22 +1,37 @@
+import Typography from "@xeno/Typography";
 import { useWeatherData } from "../../hooks";
-import { getIsPaintableConditions } from "./utils";
+import { StyledCalendarColumn, StyledCalendarRow, StyledContainer } from "./styled";
+import { getCalendarWeatherData } from "./utils";
 
 export const Main = () => {
   const { weatherData, isLoading } = useWeatherData(null);
+  const calendarWeatherData = getCalendarWeatherData(weatherData?.data.list);
 
-  if (weatherData) {
-    weatherData.data.list.forEach(item => {
-      const weather = item.weather[0].main;
-      const temp = item.main.temp_min;
-      const humidity = item.main.humidity;
-      const rain = !!item.rain;
+  if (isLoading) return <Typography>Loading...</Typography>;
 
-      const isPaintableConditions = getIsPaintableConditions(weather, temp, humidity, rain);
-      console.log(isPaintableConditions);
-    });
-  }
-
-  console.log({ weatherData, isLoading });
-
-  return <div>Main</div>;
+  return (
+    <StyledContainer>
+      {calendarWeatherData.map((column, columnIndex) => {
+        const dateTime = column[0].dateTime;
+        return (
+          <StyledCalendarColumn key={columnIndex}>
+            <Typography variant="h4">{dateTime.format("D")}</Typography>
+            <Typography variant="body1">{dateTime.format("dddd")}</Typography>
+            <>
+              {column.map(({ paintableConditions, dateTime }, rowIndex) => {
+                return (
+                  <StyledCalendarRow key={rowIndex} isPaintableConditions={paintableConditions.isPaintableConditions}>
+                    <Typography variant="caption">{dateTime.format("h A")}</Typography>
+                    {paintableConditions.reasons.map((reason: string) => (
+                      <Typography>{reason}</Typography>
+                    ))}
+                  </StyledCalendarRow>
+                );
+              })}
+            </>
+          </StyledCalendarColumn>
+        );
+      })}
+    </StyledContainer>
+  );
 };

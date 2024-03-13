@@ -39,7 +39,7 @@ type WindType = {
   deg: number;
 };
 
-type ThreeHourlyForecastType = {
+export type ThreeHourlyForecastType = {
   clouds: CloudsType;
   dt: number;
   dt_txt: string;
