@@ -99,8 +99,6 @@ export const getCalendarWeatherData = (
 
   const normalisedByDayData = getNormalisedByDayData(mappedCalendarWeatherData, 8);
 
-  console.log(normalisedByDayData);
-
   const chunkedCalenderWeatherData = getChunkedArray<CalendarWeatherData>(normalisedByDayData, 8);
 
   return chunkedCalenderWeatherData;

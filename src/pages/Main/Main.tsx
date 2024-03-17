@@ -22,8 +22,8 @@ export const Main = () => {
                 return (
                   <StyledCalendarRow
                     key={rowIndex}
-                    isPaintableConditions={paintableConditions.isPaintableConditions}
-                    isDisabled={isDisabled}
+                    $isPaintableConditions={paintableConditions.isPaintableConditions}
+                    $isDisabled={isDisabled}
                   >
                     <Typography variant="caption">{dateTime.format("h A")}</Typography>
                     {paintableConditions.reasons.map((reason: string) => (

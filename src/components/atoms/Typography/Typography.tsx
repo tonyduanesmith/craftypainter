@@ -29,8 +29,8 @@ const Typography = ({
       bold={bold}
       className={className}
       colour={colour}
-      gutterBottom={gutterBottom}
-      textAlign={textAlign}
+      $gutterBottom={gutterBottom}
+      $textAlign={textAlign}
     >
       {children}
     </StyledTypography>
