@@ -19,4 +19,5 @@ export const StyledCalendarRow = styled.div<{ isPaintableConditions: boolean }>`
   padding: ${({ theme }) => theme.spacing.md};
   border: ${({ theme }) => theme.border.thin};
   border-color: ${({ theme }) => theme.colours.neutrals[5]};
+  border-radius: ${({ theme }) => theme.radius.sm};
 `;
