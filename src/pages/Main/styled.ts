@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledContainer = styled.div`
   display: flex;
@@ -10,7 +10,11 @@ export const StyledCalendarColumn = styled.div`
   flex: 1;
 `;
 
-export const StyledCalendarRow = styled.div<{ isPaintableConditions: boolean }>`
+const disabledStyle = css`
+  background-color: ${({ theme }) => theme.colours.disabled.main};
+`;
+
+export const StyledCalendarRow = styled.div<{ isPaintableConditions: boolean; isDisabled?: boolean }>`
   display: flex;
   flex-direction: column;
   background-color: ${({ isPaintableConditions, theme }) =>
@@ -20,4 +24,6 @@ export const StyledCalendarRow = styled.div<{ isPaintableConditions: boolean }>`
   border: ${({ theme }) => theme.border.thin};
   border-color: ${({ theme }) => theme.colours.neutrals[5]};
   border-radius: ${({ theme }) => theme.radius.sm};
+
+  ${({ isDisabled }) => isDisabled && disabledStyle}
 `;

@@ -8,4 +8,5 @@ export type PaintableConditionsType = {
 export type CalendarWeatherData = {
   dateTime: Dayjs;
   paintableConditions: PaintableConditionsType;
+  isDisabled?: boolean;
 };

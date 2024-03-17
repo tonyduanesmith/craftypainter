@@ -18,9 +18,13 @@ export const Main = () => {
             <Typography variant="h4">{dateTime.format("D")}</Typography>
             <Typography variant="body1">{dateTime.format("dddd")}</Typography>
             <>
-              {column.map(({ paintableConditions, dateTime }, rowIndex) => {
+              {column.map(({ paintableConditions, dateTime, isDisabled }, rowIndex) => {
                 return (
-                  <StyledCalendarRow key={rowIndex} isPaintableConditions={paintableConditions.isPaintableConditions}>
+                  <StyledCalendarRow
+                    key={rowIndex}
+                    isPaintableConditions={paintableConditions.isPaintableConditions}
+                    isDisabled={isDisabled}
+                  >
                     <Typography variant="caption">{dateTime.format("h A")}</Typography>
                     {paintableConditions.reasons.map((reason: string) => (
                       <Typography>{reason}</Typography>

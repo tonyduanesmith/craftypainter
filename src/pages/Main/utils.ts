@@ -38,7 +38,7 @@ export const getIsPaintableConditions = (
 
   if (!isTempAboveDewPoint) reasons.push("Too much dew");
   if (!isTempBelowThreshold) reasons.push("Too hot");
-  if (!isTempBelowThreshold) reasons.push("Direct sunlight");
+  if (!isNotDirectSunlight) reasons.push("Direct sunlight");
   if (isRain) reasons.push("Rainy");
 
   return {
@@ -54,6 +54,29 @@ export const getChunkedArray = <T>(data: Array<T>, chunkSize: number): Array<Arr
   }
 
   return result;
+};
+
+export const getNormalisedByDayData = (
+  weatherData: Array<CalendarWeatherData>,
+  timesPerDay: number,
+): Array<CalendarWeatherData> => {
+  const today = dayjs();
+  const numberOfDatesToday = weatherData.filter(data => data.dateTime.isSame(today, "day")).length;
+
+  const disabledData: Array<CalendarWeatherData> = Array.from({ length: timesPerDay - numberOfDatesToday }).map(
+    (_, index) => {
+      return {
+        dateTime: dayjs().hour(index * 3),
+        paintableConditions: {
+          isPaintableConditions: false,
+          reasons: [],
+        },
+        isDisabled: true,
+      };
+    },
+  );
+
+  return [...disabledData, ...weatherData];
 };
 
 export const getCalendarWeatherData = (
@@ -74,7 +97,11 @@ export const getCalendarWeatherData = (
     };
   });
 
-  const chunkedCalenderWeatherData = getChunkedArray<CalendarWeatherData>(mappedCalendarWeatherData, 8);
+  const normalisedByDayData = getNormalisedByDayData(mappedCalendarWeatherData, 8);
+
+  console.log(normalisedByDayData);
+
+  const chunkedCalenderWeatherData = getChunkedArray<CalendarWeatherData>(normalisedByDayData, 8);
 
   return chunkedCalenderWeatherData;
 };
