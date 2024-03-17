@@ -61,6 +61,10 @@ type WeatherDataType = {
   fetchedDate: string;
 };
 
+type WeatherDataOptionsType = {
+  shouldRefetch?: boolean;
+};
+
 const getIsDifferentDay = (compareDate: Dayjs, currentDate: Dayjs) =>
   !compareDate.startOf("day").isSame(currentDate.startOf("day"));
 
@@ -73,7 +77,7 @@ const shouldFetchWeather = (fetchedDate?: string) => {
   return getIsDifferentDay(lastFetchedDate, currentDate);
 };
 
-export const useWeatherData = (initialValue: WeatherDataType | null) => {
+export const useWeatherData = (initialValue: WeatherDataType | null, options?: WeatherDataOptionsType) => {
   const [isLoading, setIsLoading] = useState(false);
   const [weatherData, setWeatherData] = useLocalStorage<WeatherDataType | null>({
     initialValue,
@@ -90,7 +94,7 @@ export const useWeatherData = (initialValue: WeatherDataType | null) => {
       setIsLoading(false);
     };
 
-    if (shouldFetchWeather(weatherData?.fetchedDate)) {
+    if (shouldFetchWeather(weatherData?.fetchedDate) || options?.shouldRefetch) {
       setIsLoading(true);
       navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
         const { latitude, longitude } = position.coords;

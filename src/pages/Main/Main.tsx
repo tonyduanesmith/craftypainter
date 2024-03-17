@@ -4,7 +4,7 @@ import { StyledCalendarColumn, StyledCalendarRow, StyledContainer } from "./styl
 import { getCalendarWeatherData } from "./utils";
 
 export const Main = () => {
-  const { weatherData, isLoading } = useWeatherData(null);
+  const { weatherData, isLoading } = useWeatherData(null, { shouldRefetch: true });
   const calendarWeatherData = getCalendarWeatherData(weatherData?.data.list);
 
   if (isLoading) return <Typography>Loading...</Typography>;
