@@ -25,8 +25,8 @@ const Typography = ({
 }: TypographyProps) => {
   return (
     <StyledTypography
-      variant={variant}
-      bold={bold}
+      $variant={variant}
+      $bold={bold}
       className={className}
       colour={colour}
       $gutterBottom={gutterBottom}

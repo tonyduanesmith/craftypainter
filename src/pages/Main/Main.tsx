@@ -21,13 +21,13 @@ export const Main = () => {
               {column.map(({ paintableConditions, dateTime, isDisabled }, rowIndex) => {
                 return (
                   <StyledCalendarRow
-                    key={rowIndex}
+                    key={`${rowIndex}_${columnIndex}`}
                     $isPaintableConditions={paintableConditions.isPaintableConditions}
                     $isDisabled={isDisabled}
                   >
                     <Typography variant="caption">{dateTime.format("h A")}</Typography>
                     {paintableConditions.reasons.map((reason: string) => (
-                      <Typography>{reason}</Typography>
+                      <Typography key={`${rowIndex}_${columnIndex}_${reason}`}>{reason}</Typography>
                     ))}
                   </StyledCalendarRow>
                 );

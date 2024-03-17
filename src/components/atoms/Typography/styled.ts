@@ -6,8 +6,8 @@ import { CSSProperties } from "react";
 import { TypographyVariants } from "./types";
 
 type StyledTypographyProps = {
-  variant: TypographyVariants;
-  bold: boolean;
+  $variant: TypographyVariants;
+  $bold: boolean;
   colour?: ColoursPathType;
   $gutterBottom: boolean;
   $textAlign: CSSProperties["textAlign"];
@@ -23,11 +23,11 @@ const gutterBottomStyle = css`
 
 export const StyledTypography = styled.p<StyledTypographyProps>`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: ${({ theme, variant }) => theme.font.size[variant]};
+  font-size: ${({ theme, $variant }) => theme.font.size[$variant]};
   color: ${({ colour, theme }) => colour && getColorFromTheme(colour, theme.colours)};
   margin: 0;
   text-align: ${({ $textAlign }) => $textAlign};
 
-  ${({ bold }) => bold && boldStyle}
+  ${({ $bold }) => $bold && boldStyle}
   ${({ $gutterBottom }) => $gutterBottom && gutterBottomStyle}
 `;
